@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(user1);
         }).orElseThrow(() -> new RuntimeException("ERREUR AU NIVEAU DU MODIFICATION DE L UTILISATEUR"));
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

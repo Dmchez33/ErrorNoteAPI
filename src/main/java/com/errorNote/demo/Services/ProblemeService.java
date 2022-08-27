@@ -1,6 +1,7 @@
 package com.errorNote.demo.Services;
 
 import com.errorNote.demo.Modeles.Probleme;
+import com.errorNote.demo.Modeles.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -11,8 +12,9 @@ public interface ProblemeService {
 
     List<Probleme> voirProbleme();
     Probleme modifierProbleme(Long id,Probleme probleme);
-    List<Probleme> rechercherProblemeParMot(String mot);
+    List<Object> rechercherProblemeParMot(String mot);
     Probleme TrouverProblemeParTitre(String titre);
+    Probleme trouverProblemeParUser(User user);
 
 
 

@@ -1,12 +1,16 @@
 package com.errorNote.demo.Controller;
 
+import com.errorNote.demo.Modeles.Probleme;
 import com.errorNote.demo.Modeles.Solution;
 import com.errorNote.demo.Modeles.User;
+import com.errorNote.demo.Services.ProblemeService;
 import com.errorNote.demo.Services.SolutionService;
+import com.errorNote.demo.Services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -15,11 +19,22 @@ import java.util.List;
 public class SolutionController {
     @Autowired
     final private SolutionService solutionService;
+    final private UserService userService;
+    final private ProblemeService problemeService;
 
-    @PostMapping("/poser_solution")
-    public Solution poserSolution(Solution solution)
+    @PostMapping("/poser_solution/{mdp}/{email}")
+    public String poserSolution(@PathVariable("mdp") String mdp,@PathVariable("email") String email,@RequestBody Solution solution)
     {
-        return solutionService.mettreSolution(solution);
+        User user = userService.findUserByEmail(email);
+        Probleme probleme = problemeService.trouverProblemeParUser(user);
+        if (userService.seConnecter(mdp, email)) {
+            solution.setDateSolution(new Date());
+            solution.setProbleme(probleme);
+            solutionService.mettreSolution(solution);
+            return "Solution Ajouter avec Success";
+        }
+        else
+            return "Erreur au niveau de l'ajout";
     }
 
     @GetMapping("/voir_solution")
