@@ -21,7 +21,7 @@ public class ProblemeController {
     final private SolutionService solutionService;
     final private UserService userService;
 
-    @PostMapping("/poser_probleme/{mdp}/{email}")
+    @PostMapping("/poser_probleme/{email}/{mdp}")
     public String poserProbleme(@RequestBody Probleme probleme, @PathVariable("mdp") String mdp, @PathVariable("email") String email) {
         User user = userService.findUserByEmail(email);
         if (userService.seConnecter(mdp, email)) {

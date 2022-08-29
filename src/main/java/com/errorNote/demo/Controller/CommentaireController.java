@@ -24,7 +24,7 @@ public class CommentaireController {
     final private ProblemeService problemeService;
     final private SolutionService solutionService;
 
-    @PostMapping("/commenter/{mdp}/{email}")
+    @PostMapping("/commenter/{email}/{mdp}")
     public String commenter(@PathVariable("email") String email, @PathVariable("mdp") String mdp, @RequestBody Commentaire commentaire){
         User user = userService.findUserByEmail(email);
         Probleme probleme = problemeService.trouverProblemeParUser(user);

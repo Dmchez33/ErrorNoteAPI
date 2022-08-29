@@ -22,7 +22,7 @@ public class SolutionController {
     final private UserService userService;
     final private ProblemeService problemeService;
 
-    @PostMapping("/poser_solution/{mdp}/{email}")
+    @PostMapping("/poser_solution/{email}/{mdp}")
     public String poserSolution(@PathVariable("mdp") String mdp,@PathVariable("email") String email,@RequestBody Solution solution)
     {
         User user = userService.findUserByEmail(email);

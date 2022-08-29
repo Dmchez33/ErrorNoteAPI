@@ -19,7 +19,9 @@ public class Probleme {
     private String techno;
     private Date dateProbleme;
 
-
+    @ManyToOne
+    @JoinColumn(name = "idEtat")
+    private EtatProbleme etatProbleme;
 
     @ManyToOne
     @JoinColumn(name = "idUser")
