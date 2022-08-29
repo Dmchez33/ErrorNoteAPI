@@ -1,8 +1,10 @@
 package com.errorNote.demo.Controller;
 
+import com.errorNote.demo.Modeles.EtatProbleme;
 import com.errorNote.demo.Modeles.Probleme;
 import com.errorNote.demo.Modeles.Solution;
 import com.errorNote.demo.Modeles.User;
+import com.errorNote.demo.Services.EtatProblemeService;
 import com.errorNote.demo.Services.ProblemeService;
 import com.errorNote.demo.Services.SolutionService;
 import com.errorNote.demo.Services.UserService;
@@ -22,12 +24,16 @@ public class SolutionController {
     final private UserService userService;
     final private ProblemeService problemeService;
 
-    @PostMapping("/poser_solution/{email}/{mdp}")
-    public String poserSolution(@PathVariable("mdp") String mdp,@PathVariable("email") String email,@RequestBody Solution solution)
+    final private EtatProblemeService etatProblemeService;
+
+    @PostMapping("/poser_solution/{email}/{mdp}/{titre}")
+    public String poserSolution(@PathVariable("mdp") String mdp,@PathVariable("email") String email,@PathVariable("titre") String titre,@RequestBody Solution solution)
     {
         User user = userService.findUserByEmail(email);
-        Probleme probleme = problemeService.trouverProblemeParUser(user);
-        if (userService.seConnecter(mdp, email)) {
+        Probleme probleme = problemeService.TrouverProblemeParTitre(titre);
+        if (userService.seConnecter(mdp, email)&&probleme.getUser()==user) {
+            EtatProbleme etatNow=  etatProblemeService.trouverParEtat("Résolu");
+            probleme.setEtatProbleme(etatNow);
             solution.setDateSolution(new Date());
             solution.setProbleme(probleme);
             solutionService.mettreSolution(solution);

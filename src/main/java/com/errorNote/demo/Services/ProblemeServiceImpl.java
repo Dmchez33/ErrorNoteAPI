@@ -31,6 +31,7 @@ public class ProblemeServiceImpl implements ProblemeService{
             probleme1.setDescription(probleme.getDescription());
             probleme1.setTechno(probleme.getTechno());
             probleme1.setUser(probleme.getUser());
+            probleme1.setEtatProbleme(probleme.getEtatProbleme());
             probleme1.setDateProbleme(probleme.getDateProbleme());
             return problemeRepository.save(probleme1);
         }).orElseThrow(()-> new RuntimeException("PROBLEME NON RETROUVER"));

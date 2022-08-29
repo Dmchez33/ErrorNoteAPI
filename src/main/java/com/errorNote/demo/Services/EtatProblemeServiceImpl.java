@@ -33,4 +33,9 @@ public class EtatProblemeServiceImpl implements EtatProblemeService {
         }).orElseThrow(() -> new RuntimeException("L'etat non Trouvé"));
 
     }
+
+    @Override
+    public EtatProbleme trouverParEtat(String etat) {
+        return etatProblemeRepository.findByEtat(etat);
+    }
 }

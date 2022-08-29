@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String supprimerCompte(Long idUser) {
+      userRepository.deleteById(idUser);
+      return "Utilisateur supprimer avec succes";
+    }
+
+    @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
