@@ -52,4 +52,9 @@ public class ProblemeServiceImpl implements ProblemeService{
     public Probleme trouverProblemeParUser(User user) {
         return problemeRepository.findByUser(user);
     }
+
+    @Override
+    public List<Object> rechercherProblemeSolutionEtCommentaireParMot(String mot) {
+        return problemeRepository.trouverProblemeSolutionCommentaireParMot(mot);
+    }
 }

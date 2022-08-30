@@ -1,6 +1,7 @@
 package com.errorNote.demo.Services;
 
 import com.errorNote.demo.Modeles.Probleme;
+import com.errorNote.demo.Modeles.Profil;
 import com.errorNote.demo.Modeles.User;
 
 public interface UserService {
@@ -10,4 +11,5 @@ public interface UserService {
     User modifierCompte(Long idUser, User user);
     String supprimerCompte(Long idUser);
     User findUserByEmail(String email);
+    User trouverUserByProfil(Profil profil);
 }

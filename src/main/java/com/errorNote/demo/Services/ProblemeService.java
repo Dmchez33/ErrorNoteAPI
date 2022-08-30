@@ -16,6 +16,8 @@ public interface ProblemeService {
     Probleme TrouverProblemeParTitre(String titre);
     Probleme trouverProblemeParUser(User user);
 
+    List<Object> rechercherProblemeSolutionEtCommentaireParMot(String mot);
+
 
 
 }

@@ -24,7 +24,7 @@ public class SolutionServiceImpl implements SolutionService{
     @Override
     public Solution modifierSolution(Long id, Solution solution) {
         return solutionRepository.findById(id).map(solution1 -> {
-            solution1.setDescription(solution.getDescription());
+            solution1.setDescriptions(solution.getDescriptions());
             solution1.setResource(solution.getResource());
             solution1.setDateSolution(solution.getDateSolution());
             solution1.setTempsconsacrer(solution.getTempsconsacrer());

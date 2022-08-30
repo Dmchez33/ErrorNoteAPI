@@ -1,5 +1,6 @@
 package com.errorNote.demo.Services;
 
+import com.errorNote.demo.Modeles.Profil;
 import com.errorNote.demo.Modeles.User;
 import com.errorNote.demo.Repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean seConnecter(String mdp, String email) {
-        if ((userRepository.findByEmail(email) == null) || (userRepository.findByPassword(mdp) == null))
+        /*if ((userRepository.findByEmail(email) == null) || (userRepository.findByPassword(mdp) == null))
+            return false;
+        else
+            return true;*/
+        if (userRepository.findByEmailAndPassword(email,mdp) == null)
             return false;
         else
             return true;
@@ -46,5 +51,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User trouverUserByProfil(Profil profil) {
+        return userRepository.findByProfil(profil);
     }
 }

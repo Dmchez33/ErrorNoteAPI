@@ -13,7 +13,7 @@ public class Commentaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCom;
-    private String description;
+    private String descriptionc;
     private Date dateCommentaire;
 
     @ManyToOne

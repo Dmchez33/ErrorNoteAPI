@@ -13,7 +13,7 @@ public class Solution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idc;
-    private String description;
+    private String descriptions;
     private String resource;
     private String tempsconsacrer;
     private String methoderecherche;
