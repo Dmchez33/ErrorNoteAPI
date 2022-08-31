@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
@@ -71,15 +73,21 @@ public class UserController {
     }
 
     //METHODE PERMETTANT DE SUPPRIMER UN COMPTE UTILISATEUR
-    @DeleteMapping("/supprimer_compte/{email}/{mdp}/{profil}/{iduser}")
-    public String supprimerCompte(@PathVariable("iduser") Long idUser,  @PathVariable("profil") String profil, @PathVariable("email") String email, @PathVariable("mdp") String mdp) {
+    @PutMapping("/supprimer_compte/{email}/{mdp}/{profil}/{emails}")
+    public String supprimerCompte( @RequestBody User user,  @PathVariable("profil") String profil, @PathVariable("email") String email, @PathVariable("emails") String emails, @PathVariable("mdp") String mdp) {
         User user1 = userService.findUserByEmail(email);
+        User user2 = userService.findUserByEmail(emails);
+        Long idUser=user2.getIdUser();
         Profil profil1 = profilService.trouverProfilParLibelle(profil);
         if(profil.equals("Admin"))
         {
-            if (userService.seConnecter(mdp, email) && (profil1 == user1.getProfil()) && (idUser == user1.getIdUser())) {
-
-                userService.supprimerCompte(idUser);
+            if (userService.seConnecter(mdp, email) && (profil1 == user1.getProfil())) {
+                user.setPrenom(user2.getPrenom());
+                user.setNom(user2.getNom());
+                user.setContact(user2.getContact());
+                user.setEmail(user2.getEmail());
+                user.setPassword(user2.getPassword());
+                userService.modifierComptU(idUser,user);
                 return "COMPTE SUPPRIMER AVEC SUCCESS";
             } else {
                 return "VEUILLEZ VOUS AUTHENTIFIER POUR POUVOIR EFFECTUER CETTE ACTION";
@@ -90,4 +98,11 @@ public class UserController {
         }
 
     }
+
+    @GetMapping("/afficher")
+    public List<User> afficher(){
+        return userService.AfficherCompte();
+    }
+
+
 }

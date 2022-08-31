@@ -21,4 +21,15 @@ public class CommentaireServiceImpl implements CommentaireService {
     public List<Commentaire> voirCommentaire() {
         return commentaireRepository.findAll();
     }
+
+    @Override
+    public String supprimerCommentaire(Long idCom) {
+        commentaireRepository.deleteById(idCom);
+        return"Commentaire supprimer avec succes";
+    }
+
+    @Override
+    public Commentaire trouverParId(Long idCom) {
+        return commentaireRepository.findByIdCom(idCom);
+    }
 }
