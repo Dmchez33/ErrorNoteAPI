@@ -42,7 +42,7 @@ public class UserController {
         Profil profil1 = profilService.trouverProfilParLibelle("Admin");
         if (userService.seConnecter(user.getPassword(), user.getEmail()) && (user.getProfil().getLibelle() == profil1.getLibelle())) {
             return "CE COMPTE EXISTE DEJA";
-        } else{
+        } else {
             user.setProfil(profil1);
             userService.CreerCompte(user);
             return "COMPTE CREER AVEC SUCCES";
@@ -55,18 +55,16 @@ public class UserController {
     public String modifierCompte(@PathVariable("iduser") Long idUser, @RequestBody User user, @PathVariable("profil") String profil, @PathVariable("email") String email, @PathVariable("mdp") String mdp) {
         User user1 = userService.findUserByEmail(email);// INSTATIATION D'UN USER EN FONCTION DE SON EMAIL
         Profil profil1 = profilService.trouverProfilParLibelle(profil); // RECUPERATION D'UN PROFIL EN FONCTION DE SON LIBELLE
-        if(profil1.equals(user1.getProfil()))
-        {
+        if (profil1.equals(user1.getProfil())) {
             if (userService.seConnecter(mdp, email) && (user1 != null) && (user1.getIdUser() == idUser)) {
 
-                user.setProfil( user1.getProfil());
+                user.setProfil(user1.getProfil());
                 userService.modifierCompte(idUser, user);
                 return "COMPTE MODIFIER AVEC SUCCES";
             } else {
                 return "CE COMPTE NE VOUS APPARTIENT PAS";
             }
-        }else
-        {
+        } else {
             return "VOTRE PROFIL EST INCORRECT";
         }
 
@@ -74,33 +72,31 @@ public class UserController {
 
     //METHODE PERMETTANT DE SUPPRIMER UN COMPTE UTILISATEUR
     @PutMapping("/supprimer_compte/{email}/{mdp}/{profil}/{emails}")
-    public String supprimerCompte( @RequestBody User user,  @PathVariable("profil") String profil, @PathVariable("email") String email, @PathVariable("emails") String emails, @PathVariable("mdp") String mdp) {
+    public String supprimerCompte(@RequestBody User user, @PathVariable("profil") String profil, @PathVariable("email") String email, @PathVariable("emails") String emails, @PathVariable("mdp") String mdp) {
         User user1 = userService.findUserByEmail(email);
         User user2 = userService.findUserByEmail(emails);
-        Long idUser=user2.getIdUser();
+        Long idUser = user2.getIdUser();
         Profil profil1 = profilService.trouverProfilParLibelle(profil);
-        if(profil.equals("Admin"))
-        {
+        if (profil.equals("Admin")) {
             if (userService.seConnecter(mdp, email) && (profil1 == user1.getProfil())) {
                 user.setPrenom(user2.getPrenom());
                 user.setNom(user2.getNom());
                 user.setContact(user2.getContact());
                 user.setEmail(user2.getEmail());
                 user.setPassword(user2.getPassword());
-                userService.modifierComptU(idUser,user);
+                userService.modifierComptU(idUser, user);
                 return "COMPTE SUPPRIMER AVEC SUCCESS";
             } else {
                 return "VEUILLEZ VOUS AUTHENTIFIER POUR POUVOIR EFFECTUER CETTE ACTION";
             }
-        }else
-        {
+        } else {
             return "VOUS N'AVEZ PAS LE DROIT DE SUPPRIMER CE COMPTE";
         }
 
     }
 
     @GetMapping("/afficher")
-    public List<User> afficher(){
+    public List<User> afficher() {
         return userService.AfficherCompte();
     }
 

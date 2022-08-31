@@ -11,9 +11,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class SolutionServiceImpl implements SolutionService{
+public class SolutionServiceImpl implements SolutionService {
     @Autowired
     final private SolutionRepository solutionRepository;
+
     @Override
     public Solution mettreSolution(Solution solution) {
 
@@ -29,7 +30,7 @@ public class SolutionServiceImpl implements SolutionService{
             solution1.setDateSolution(solution.getDateSolution());
             solution1.setTempsconsacrer(solution.getTempsconsacrer());
             return solutionRepository.save(solution1);
-        }).orElseThrow(()-> new RuntimeException("La solution Choisie n'est pas modifiable"));
+        }).orElseThrow(() -> new RuntimeException("La solution Choisie n'est pas modifiable"));
     }
 
     @Override

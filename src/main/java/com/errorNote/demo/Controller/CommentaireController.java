@@ -73,26 +73,27 @@ public class CommentaireController {
         Commentaire commentaire = commentaireService.trouverParId(idCommentaire);
         User user = userService.findUserByEmail(email);
         User userCom = commentaire.getUser();
-        Long idComUs=userCom.getIdUser();
+        Long idComUs = userCom.getIdUser();
         Long idUs = user.getIdUser();
 
-        if (userService.seConnecter(mdp, email)&&idComUs==idUs) {
+        if (userService.seConnecter(mdp, email) && idComUs == idUs) {
             commentaireService.supprimerCommentaire(commentaire.getIdCom());
             return "Commentaire supprimer avec succes";
 
-        }else {
+        } else {
             return "Vous n'etes pas éligible d'effectuer cette action";
         }
 
     }
+
     @DeleteMapping("/supprimerCommentaireParAdmin/{email}/{mdp}/{profil}/{idCommentaire}")
-    public String supprimerCommentaireParAdmin(@PathVariable("email") String email,@PathVariable("profil") String profil, @PathVariable("idCommentaire") Long idCommentaire, @PathVariable("mdp") String mdp) {
+    public String supprimerCommentaireParAdmin(@PathVariable("email") String email, @PathVariable("profil") String profil, @PathVariable("idCommentaire") Long idCommentaire, @PathVariable("mdp") String mdp) {
         Commentaire commentaire = commentaireService.trouverParId(idCommentaire);
         User user = userService.findUserByEmail(email);
-        Profil profil1=profilService.trouverProfilParLibelle(profil);
+        Profil profil1 = profilService.trouverProfilParLibelle(profil);
 
         if (profil.equals("Admin")) {
-            if (userService.seConnecter(mdp, email)&&profil1== user.getProfil()) {
+            if (userService.seConnecter(mdp, email) && profil1 == user.getProfil()) {
                 commentaireService.supprimerCommentaire(commentaire.getIdCom());
                 return "Commentaire supprimer avec succes";
 
@@ -100,7 +101,7 @@ public class CommentaireController {
                 return "Vous n'etes pas éligible d'effectuer cette action1";
             }
 
-        }else {
+        } else {
             return "Vous n'etes pas éligible d'effectuer cette action2";
         }
     }
