@@ -53,18 +53,19 @@ public class UserController {
     public String modifierCompte(@PathVariable("iduser") Long idUser, @RequestBody User user, @PathVariable("profil") String profil, @PathVariable("email") String email, @PathVariable("mdp") String mdp) {
         User user1 = userService.findUserByEmail(email);// INSTATIATION D'UN USER EN FONCTION DE SON EMAIL
         Profil profil1 = profilService.trouverProfilParLibelle(profil); // RECUPERATION D'UN PROFIL EN FONCTION DE SON LIBELLE
-        if(profil.equals("Admin"))
+        if(profil1.equals(user1.getProfil()))
         {
-            if (userService.seConnecter(mdp, email) && (user1 != null)) {
+            if (userService.seConnecter(mdp, email) && (user1 != null) && (user1.getIdUser() == idUser)) {
+
                 user.setProfil( user1.getProfil());
                 userService.modifierCompte(idUser, user);
-                return "Modification effectuer avec succes";
+                return "COMPTE MODIFIER AVEC SUCCES";
             } else {
-                return "Vous n'etes pas eligible à effectuer cette action2";
+                return "CE COMPTE NE VOUS APPARTIENT PAS";
             }
         }else
         {
-            return "Vous n'etes pas eligible à effectuer cette action1";
+            return "VOTRE PROFIL EST INCORRECT";
         }
 
     }
@@ -76,16 +77,16 @@ public class UserController {
         Profil profil1 = profilService.trouverProfilParLibelle(profil);
         if(profil.equals("Admin"))
         {
-            if (userService.seConnecter(mdp, email) && (profil1 == user1.getProfil())) {
+            if (userService.seConnecter(mdp, email) && (profil1 == user1.getProfil()) && (idUser == user1.getIdUser())) {
 
                 userService.supprimerCompte(idUser);
-                return "Suppression effectuer avec succes";
+                return "COMPTE SUPPRIMER AVEC SUCCESS";
             } else {
-                return "Vous n'etes pas eligible à effectuer cette action2";
+                return "VEUILLEZ VOUS AUTHENTIFIER POUR POUVOIR EFFECTUER CETTE ACTION";
             }
         }else
         {
-            return "Vous n'etes pas eligible à effectuer cette action1";
+            return "VOUS N'AVEZ PAS LE DROIT DE SUPPRIMER CE COMPTE";
         }
 
     }
