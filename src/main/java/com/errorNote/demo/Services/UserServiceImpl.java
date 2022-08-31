@@ -44,18 +44,6 @@ public class UserServiceImpl implements UserService {
         }).orElseThrow(() -> new RuntimeException("ERREUR AU NIVEAU DU MODIFICATION DE L UTILISATEUR"));
     }
 
-    @Override
-    public User modifierComptU(Long idUser, User user) {
-        return userRepository.findById(idUser).map(user1 -> {
-            user1.setContact(user.getContact());
-            user1.setEmail(user.getEmail());
-            user1.setNom(user.getNom());
-            user1.setPrenom(user.getPrenom());
-            user1.setPassword(user.getPassword());
-            user1.setProfil(user.getProfil());
-            return userRepository.save(user1);
-        }).orElseThrow(() -> new RuntimeException("ERREUR AU NIVEAU DU MODIFICATION DE L UTILISATEUR"));
-    }
 
     @Override
     public String supprimerCompte(Long idUser) {

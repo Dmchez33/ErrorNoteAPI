@@ -87,7 +87,7 @@ public class UserController {
                 user.setContact(user2.getContact());
                 user.setEmail(user2.getEmail());
                 user.setPassword(user2.getPassword());
-                userService.modifierComptU(idUser,user);
+                userService.modifierCompte(idUser,user);
                 return "COMPTE SUPPRIMER AVEC SUCCESS";
             } else {
                 return "VEUILLEZ VOUS AUTHENTIFIER POUR POUVOIR EFFECTUER CETTE ACTION";
