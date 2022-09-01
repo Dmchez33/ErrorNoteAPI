@@ -11,7 +11,7 @@ public interface UserService {
     User CreerCompte(User user);
     boolean seConnecter(String mdp, String email);
     User modifierCompte(Long idUser, User user);
-    User modifierComptU(Long idUser, User user);
+
 
     String supprimerCompte(Long idUser);
     User findUserByEmail(String email);
