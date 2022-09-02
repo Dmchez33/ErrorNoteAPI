@@ -38,13 +38,12 @@ public class ProblemeController {
             probleme.setEtatProbleme(etatNow);
 
             // CONDITION PERMETTANT DE VERIFIER SI LE PROBLEME EXISTE DEJA OU PAS
-            if(problemeService.TrouverProblemeParTitre(probleme.getTitre()) == null){
+            if (problemeService.TrouverProblemeParTitre(probleme.getTitre()) == null) {
                 //ENREGISTREMENT DU PROBLEME
                 problemeService.poserProbleme(probleme);
                 return "AUTHENTIFICATION EFFECTUER AVEC SUCCESS ET LE PROBLEME EST BIEN AJOUTER";
-            }else
+            } else
                 return "CE PROBLEME EXISTE DEJA VEUILLEZ RECHERCHER LA SOLUTION";
-
 
 
         } else
@@ -59,10 +58,10 @@ public class ProblemeController {
 
     //METHODE PERMETTANT DE MODIFIER UN PROBLEME
     @PutMapping("/modifier_probleme/{email}/{mdp}/{titre}/{etat}")
-    public String modifierProbleme(@PathVariable("email") String email, @PathVariable("mdp") String mdp,@PathVariable("etat") String etat, @PathVariable("titre") String titre, @RequestBody Probleme probleme) {
+    public String modifierProbleme(@PathVariable("email") String email, @PathVariable("mdp") String mdp, @PathVariable("etat") String etat, @PathVariable("titre") String titre, @RequestBody Probleme probleme) {
 
         User user = userService.findUserByEmail(email);// INSTATIATION D'UN UTILISATEUR PAR SON EMAIL
-        EtatProbleme etatNow= etatProblemeService.trouverParEtat(etat);//INSTATIATION ETAT EN FONCTION DE SON LIBELLE
+        EtatProbleme etatNow = etatProblemeService.trouverParEtat(etat);//INSTATIATION ETAT EN FONCTION DE SON LIBELLE
 
         if (userService.seConnecter(mdp, email)) {
             //ATTRIBUTION DES VALEUR A CERTAINS ATTRIBUTS DU PROBLEME COMME DATE, UTILISATEUR QUI A CREER LE PROBLEME ET L'ETATPROBLEM
@@ -71,11 +70,9 @@ public class ProblemeController {
             probleme.setEtatProbleme(etatNow);
             Probleme probleme1 = problemeService.TrouverProblemeParTitre(titre);
             // CONDITION PERMETTANT DE VERIFIER SI LE PROBLEME EST TROUVER
-            if (probleme1.equals(null))
-            {
+            if (probleme1.equals(null)) {
                 return "CE PROBLEME EST INTROUVABLE";
-            }
-            else {
+            } else {
                 problemeService.modifierProbleme(probleme1.getIdP(), probleme);
                 return "AUTHENTIFICATION EFFECTUER AVEC SUCCESS ET LE PROBLEME EST BIEN MODIFIER";
             }
@@ -89,10 +86,9 @@ public class ProblemeController {
     @GetMapping("/trouver_par_mot/{mot_cle}")
     public List<Object> trouverProblemeParMotCle(@PathVariable("mot_cle") String mot_cle) {
         List<Object> probleme = problemeService.rechercherProblemeParMot(mot_cle);
-        if (probleme == null)
-        {
+        if (probleme == null) {
             throw new RuntimeException("CE PROBLEME N'EXISTE PAS");
-        }else
+        } else
             return probleme;
     }
 
@@ -100,10 +96,9 @@ public class ProblemeController {
     @GetMapping("/trouver_par_mot_probleme_commentaire/{mot_cle}")
     public List<Object> trouverProblemeSolutionCommentaireParMotCle(@PathVariable("mot_cle") String mot_cle) {
         List<Object> probleme = problemeService.rechercherProblemeSolutionEtCommentaireParMot(mot_cle);
-        if (probleme == null)
-        {
+        if (probleme == null) {
             throw new RuntimeException("CE PROBLEME N'EXISTE PAS");
-        }else
+        } else
             return probleme;
     }
 

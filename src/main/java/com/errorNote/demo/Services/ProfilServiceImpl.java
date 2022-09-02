@@ -22,7 +22,7 @@ public class ProfilServiceImpl implements ProfilService {
         return profilRepository.findById(id).map(profil1 -> {
             profil1.setLibelle(profil.getLibelle());
             return profilRepository.save(profil);
-        }).orElseThrow(()->new RuntimeException("ERREUR AU NIVEAU DU MODIFICATION DU PROBLEME"));
+        }).orElseThrow(() -> new RuntimeException("ERREUR AU NIVEAU DU MODIFICATION DU PROBLEME"));
     }
 
     @Override
@@ -32,6 +32,6 @@ public class ProfilServiceImpl implements ProfilService {
 
     @Override
     public void suprimerProfil(Long id) {
-         profilRepository.deleteById(id);
+        profilRepository.deleteById(id);
     }
 }

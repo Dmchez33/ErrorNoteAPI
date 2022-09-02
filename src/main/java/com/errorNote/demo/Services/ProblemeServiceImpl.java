@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @AllArgsConstructor
-public class ProblemeServiceImpl implements ProblemeService{
+public class ProblemeServiceImpl implements ProblemeService {
 
     @Autowired
     final private ProblemeRepository problemeRepository;
+
     @Override
     public Probleme poserProbleme(Probleme probleme) {
         return problemeRepository.save(probleme);
@@ -25,7 +27,7 @@ public class ProblemeServiceImpl implements ProblemeService{
     }
 
     @Override
-    public Probleme modifierProbleme(Long id,Probleme probleme) {
+    public Probleme modifierProbleme(Long id, Probleme probleme) {
         return problemeRepository.findById(id).map(probleme1 -> {
             probleme1.setTitre(probleme.getTitre());
             probleme1.setDescription(probleme.getDescription());
@@ -34,7 +36,7 @@ public class ProblemeServiceImpl implements ProblemeService{
             probleme1.setEtatProbleme(probleme.getEtatProbleme());
             probleme1.setDateProbleme(probleme.getDateProbleme());
             return problemeRepository.save(probleme1);
-        }).orElseThrow(()-> new RuntimeException("PROBLEME NON RETROUVER"));
+        }).orElseThrow(() -> new RuntimeException("PROBLEME NON RETROUVER"));
 
     }
 

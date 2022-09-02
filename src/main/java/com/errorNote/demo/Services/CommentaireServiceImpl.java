@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class CommentaireServiceImpl implements CommentaireService {
     @Autowired
     final private CommentaireRepository commentaireRepository;
+
     @Override
     public Commentaire commenter(Commentaire commentaire) {
         return commentaireRepository.save(commentaire);
@@ -25,7 +27,7 @@ public class CommentaireServiceImpl implements CommentaireService {
     @Override
     public String supprimerCommentaire(Long idCom) {
         commentaireRepository.deleteById(idCom);
-        return"Commentaire supprimer avec succes";
+        return "Commentaire supprimer avec succes";
     }
 
     @Override

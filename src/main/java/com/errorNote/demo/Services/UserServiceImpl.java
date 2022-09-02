@@ -14,6 +14,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     final private UserRepository userRepository;
+
     @Override
     public User CreerCompte(User user) {
         return userRepository.save(user);
@@ -21,11 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean seConnecter(String mdp, String email) {
-        /*if ((userRepository.findByEmail(email) == null) || (userRepository.findByPassword(mdp) == null))
-            return false;
-        else
-            return true;*/
-        if (userRepository.findByEmailAndPassword(email,mdp) == null)
+
+        if (userRepository.findByEmailAndPassword(email, mdp) == null)
             return false;
         else
             return true;
@@ -47,8 +45,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String supprimerCompte(Long idUser) {
-      userRepository.deleteById(idUser);
-      return "Utilisateur supprimer avec succes";
+        userRepository.deleteById(idUser);
+        return "Utilisateur supprimer avec succes";
     }
 
     @Override
