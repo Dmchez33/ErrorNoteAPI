@@ -10,8 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,7 +30,7 @@ class ProblemeControllerTest {
 
     @Test
     void poserProbleme() throws Exception{
-        mockMvc.perform(post("/probleme/poser_probleme/kali@gmail.com/AJOUR2345")
+        mockMvc.perform(post("/probleme/poser_probleme/diarraidrissa9@gmail.com/123456789")
                         .content(
                                 "{"
                                         + "\"titre\": \"ERREUR BEAN\","
@@ -47,7 +46,7 @@ class ProblemeControllerTest {
     @Test
     void modifierProbleme() throws Exception {
 
-        mockMvc.perform(put("/probleme/modifier_probleme/kali@gmail.com/AJOUR2345/ERREUR UNKNOWN/Résolu")
+        mockMvc.perform(put("/probleme/modifier_probleme/diarraidrissa9@gmail.com/123456789/ERREUR BEAN/Résolu")
                         .content(
                                 "{"
                                         + "\"titre\": \"ERREUR UNKNOWN23\","
@@ -60,4 +59,31 @@ class ProblemeControllerTest {
                 .andExpect(status().isOk());
     }
 
+
+    @Test
+    void voirProbleme() throws Exception {
+        mockMvc.perform(get("/probleme/voir_probleme")
+
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void trouverProblemeParMotCle() throws Exception {
+        mockMvc.perform(get("/probleme/trouver_par_mot/Spring")
+
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void trouverProblemeSolutionCommentaireParMotCle() throws Exception {
+        mockMvc.perform(get("/probleme/trouver_par_mot_probleme_commentaire/Spring")
+
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }

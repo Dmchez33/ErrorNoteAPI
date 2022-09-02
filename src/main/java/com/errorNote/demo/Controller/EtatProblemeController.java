@@ -32,7 +32,7 @@ public class EtatProblemeController {
 
     // METHODE PERMETTANT PERMETTANT DE MODIFIER L'ETAT DU PROBLEME
     @PutMapping("/modifier_etat/{email}/{mdp}/{idEtat}")
-    public EtatProbleme modifierEtat(Long idetat, EtatProbleme etatProbleme) {
+    public EtatProbleme modifierEtat(@PathVariable("idEtat") Long idetat, @PathVariable("email") String email,@PathVariable("mdp") String mdp, @RequestBody EtatProbleme etatProbleme) {
         return etatProblemeService.modifierEtat(idetat, etatProbleme);
     }
 

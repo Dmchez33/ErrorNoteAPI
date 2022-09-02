@@ -8,53 +8,52 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/*
-Les annotations @SpringBootTest et @AutoConfigureMockMvc
-permettent de charger le contexte Spring et de réaliser
-des requêtes sur le controller.
- */
 @SpringBootTest
 @AutoConfigureMockMvc
-class CommentaireControllerTest {
-    /*{
-        "descriptionc":"vvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-    }*/
+class EtatProblemeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void commenter() throws Exception {
-
-        mockMvc.perform(post("/commentaire/commenter/diarraidrissa9@gmail.com/123456789/ERREUR BEAN")
+    void ajouterEtat() throws Exception {
+        mockMvc.perform(post("/etat/ajouter_etat/diarraidrissa9@gmail.com/123456789")
                         .content(
                                 "{"
-                                        + "\"descriptionc\": \"wwwwwwwwwwwwwwwwwww\""
+                                        + "\"etat\": \"En cours\""
                                         + "}"
                         ).contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
+
     }
 
     @Test
-    void voirCommentaire() throws Exception {
-        mockMvc.perform(get("/commentaire/affichercommentaire")
+    void modifierEtat() throws Exception {
+        long idEtat = 3;
+        mockMvc.perform(put("/etat/modifier_etat/diarraidrissa9@gmail.com/123456789/" + idEtat)
+                        .content(
+                                "{"
+                                        + "\"etat\": \"Fermé\""
+
+                                        + "}"
+                        ).contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void voirEtat() throws Exception {
+        mockMvc.perform(get("/etat/voirEtat")
 
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    void supprimerCommentaire() {
-    }
-
-    @Test
-    void supprimerCommentaireParAdmin() {
     }
 }
