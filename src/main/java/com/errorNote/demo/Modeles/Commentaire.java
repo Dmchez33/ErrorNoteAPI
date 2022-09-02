@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -12,7 +13,8 @@ public class Commentaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCom;
-    private String description;
+    private String descriptionc;
+    private Date dateCommentaire;
 
     @ManyToOne
     @JoinColumn(name = "idUser")

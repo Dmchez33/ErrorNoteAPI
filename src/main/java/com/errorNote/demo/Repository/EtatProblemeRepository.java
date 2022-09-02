@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EtatProblemeRepository extends JpaRepository<EtatProbleme,Long> {
+    EtatProbleme findByEtat(String etat);
+
 }

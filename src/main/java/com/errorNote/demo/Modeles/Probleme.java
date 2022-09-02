@@ -16,12 +16,12 @@ public class Probleme {
     private Long idP;
     private String titre;
     private String description;
-    private String technoConcerner;
+    private String techno;
     private Date dateProbleme;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idSolution")
-    private Solution solution;
+    @ManyToOne
+    @JoinColumn(name = "idEtat")
+    private EtatProbleme etatProbleme;
 
     @ManyToOne
     @JoinColumn(name = "idUser")

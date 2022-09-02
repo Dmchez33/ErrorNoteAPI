@@ -1,16 +1,20 @@
 package com.errorNote.demo.Services;
 
+import com.errorNote.demo.Modeles.Profil;
 import com.errorNote.demo.Modeles.User;
 import com.errorNote.demo.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     @Autowired
     final private UserRepository userRepository;
+
     @Override
     public User CreerCompte(User user) {
         return userRepository.save(user);
@@ -18,7 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean seConnecter(String mdp, String email) {
-        if ((userRepository.findByEmail(email) == null) || (userRepository.findByPassword(mdp) == null))
+
+        if (userRepository.findByEmailAndPassword(email, mdp) == null)
             return false;
         else
             return true;
@@ -35,5 +40,27 @@ public class UserServiceImpl implements UserService {
             user1.setProfil(user.getProfil());
             return userRepository.save(user1);
         }).orElseThrow(() -> new RuntimeException("ERREUR AU NIVEAU DU MODIFICATION DE L UTILISATEUR"));
+    }
+
+
+    @Override
+    public String supprimerCompte(Long idUser) {
+        userRepository.deleteById(idUser);
+        return "Utilisateur supprimer avec succes";
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User trouverUserByProfil(Profil profil) {
+        return userRepository.findByProfil(profil);
+    }
+
+    @Override
+    public List<User> AfficherCompte() {
+        return userRepository.findAll();
     }
 }
