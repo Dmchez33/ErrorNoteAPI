@@ -30,18 +30,24 @@ public class SolutionController {
     public String poserSolution(@PathVariable("mdp") String mdp, @PathVariable("email") String email, @PathVariable("titre") String titre, @RequestBody Solution solution) {
         User user = userService.findUserByEmail(email);
         Probleme probleme = problemeService.TrouverProblemeParTitre(titre);
+        Solution solution1 = solutionService.trouverSolutionParProbleme(probleme);
         if (userService.seConnecter(mdp, email)) {
-            //INSTATIATION D'UN ETAT EN FONCTION DE SON LIBELLE
-            if (probleme.getUser() == user) {
-                EtatProbleme etatNow = etatProblemeService.trouverParEtat("Résolu");
-                probleme.setEtatProbleme(etatNow);//DEFINITION DE LA VALEUR DE L'ETAT DU PROBLEME APRES LA RESOLUTION
-                solution.setDateSolution(new Date());// DEFINITION DE LA DATE DU RESOLUTION DU PROBLEME
-                solution.setProbleme(probleme);// DEFINION DU PROBLEME DE LA SOLUTION
-                // AJOUT DE LA SOLUTION
-                solutionService.mettreSolution(solution);
-                return "SOLUTION AJOUTER AVEC SUCCESS";
-            } else
-                return "VOUS N'ÊTES PAS ELIGIBLE A RESOUDRE UN PROBLEME";
+            //CONDITION PERMETTANT DE VERIFIER SI LA SOLUTION EXISTE OU PAS
+            if (solution1 == null)
+            {
+                //INSTATIATION D'UN ETAT EN FONCTION DE SON LIBELLE
+                if (probleme.getUser() == user) {
+                    EtatProbleme etatNow = etatProblemeService.trouverParEtat("Résolu");
+                    probleme.setEtatProbleme(etatNow);//DEFINITION DE LA VALEUR DE L'ETAT DU PROBLEME APRES LA RESOLUTION
+                    solution.setDateSolution(new Date());// DEFINITION DE LA DATE DU RESOLUTION DU PROBLEME
+                    solution.setProbleme(probleme);// DEFINION DU PROBLEME DE LA SOLUTION
+                    // AJOUT DE LA SOLUTION
+                    solutionService.mettreSolution(solution);
+                    return "PROBLEME SOLUTIONNER AVEC SUCCESS";
+                } else
+                    return "VOUS N'ÊTES PAS ELIGIBLE A RESOUDRE UN PROBLEME";
+            }else
+                return "CE PROBLEME A DEJA ETE RESOLU";
         } else
             return "MOT DE PASSE OU EMAIL INCORRECT";
     }
